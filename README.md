@@ -6,7 +6,8 @@ This is my submission for the coding challenge. I have used the following techno
 
 - Microsoft.EntityFrameworkCore.Sqlite - For Database Access
 - Cypress - For End to End Testing
-- xUnit - For Integration Testing
+- xUnit
+- Moq
 
 
 ### UI
