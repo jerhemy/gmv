@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="style.css"></link>
+    </head>
+
+    <body>
+        <select id="stopList" name="customer">
+            <option value="0">Select a stop</option>
+        </select>
+        <br/>
+        <br/>
+        <div id="arrivalContainer">
+            Next Arrival: <span id="nextArrival"></span>
+        </div>
+    </body>
+    <script>
+        $(document).ready(function () {
+            
+            $.get( "api/route", function( data ) {
+                for (let index = 0; index < data.length; index++) {
+                    $('#stopList').append(`<option value="${data[index]?.id}">${data[index]?.id} - ${data[index].name}</option>`);
+                }
+            });
+    
+            $('#stopList').on('change', function() {
+                
+                if(this.value === "0") {
+                    $('#nextArrival').text('');
+                    $( "#arrivalContainer").hide();
+                    return;
+                }
+                
+                $.get(`api/route/${this.value}`, function (data) {
+                    $( "#arrivalContainer").show();
+                    if (data) {
+                        $('#nextArrival').text(convertNumberToTime(data.time));
+                        
+                    } else {
+                        $('#nextArrival').text('No more buses today');
+                    }
+                });
+                
+            });
+        });
+        
+        function convertNumberToTime(time) {
+            const stringTime = `${time}`;
+            let formattedTime = stringTime.length === 3 ? `0${time}` : stringTime;
+            formattedTime = formattedTime.slice(0, 2) + ':' + formattedTime.slice(2, 4);
+            const [hour, minute] = formattedTime.split(':');
+            return `${parseInt(hour) > 12 ? parseInt(hour) - 12 : parseInt(hour) === 0 ? 12 : parseInt(hour)}:${minute} ${parseInt(hour) >= 12 ? 'pm' : 'am'}`;
+        }
+    </script>
+</html>

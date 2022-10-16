@@ -1,0 +1,24 @@
+{
+  "name": "gmv",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "cy:open": "cypress open",
+    "e2e": "cypress run --headless --browser chrome"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jerhemy/gmv-code-test.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jerhemy/gmv-code-test/issues"
+  },
+  "homepage": "https://github.com/jerhemy/gmv-code-test#readme",
+  "dependencies": {
+    "cypress": "^10.10.0"
+  }
+}
